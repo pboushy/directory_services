@@ -69,5 +69,10 @@ module OpenDirectory
             Dscl.generate("create", "/Users/#{username}", params)
             Dscl.run
         end
+
+        def self.reset_credentials(username, password)
+          Dscl.generate("passwd", "/Users/#{username}", ["'#{password}'"])
+          Dscl.run
+        end
     end
 end
