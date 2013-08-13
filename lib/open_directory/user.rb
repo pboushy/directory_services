@@ -26,7 +26,8 @@ module OpenDirectory
             if output.empty?
                 true
             else
-                !output[0].include?("eDSAuthFailed")
+              #!output[0].include?("eDSAuthFailed")
+              false
             end
         end
 
