@@ -31,10 +31,8 @@ module OpenDirectory
             end
         end
 
-        def self.create(username, password, params)
-            Dscl.generate("create", "/Users/#{username}")
-            Dscl.generate("passwd", "/Users/#{username}", ["'#{password}'"])
-            Dscl.generate("create", "/Users/#{username}", ["NFSHomeDirectory", "/Users/#{username}"])
+        def self.base_script(username, password=nil, params=[])
+            Dscl.generate("passwd", "/Users/#{username}", ["'#{password}'"]) unless password.nil?
             params.each do |key, value|
                 if key == :Keywords
                     value.each do |keyword|
@@ -44,7 +42,18 @@ module OpenDirectory
                     Dscl.generate("create", "/Users/#{username}", [key, "'#{value}'"])
                 end
             end
-            Dscl.run
+        end
+
+        def self.update(username, password=nil, params=[])
+          base_script(username, password, params)
+          Dscl.run
+        end
+
+        def self.create(username, password, params=[])
+          Dscl.generate("create", "/Users/#{username}")
+          Dscl.generate("passwd", "/Users/#{username}", ["'#{password}'"])
+          base_script(username, password, params)
+          Dscl.run
         end
 
         def self.delete(username)
