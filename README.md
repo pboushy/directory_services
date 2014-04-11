@@ -1,4 +1,4 @@
-# OpenDirectory
+# DirectoryServices
 
 Allows interacting with OS X DirectoryServices locally through direct dscl commands or through an SSH Tunnel.
 
@@ -6,7 +6,7 @@ Allows interacting with OS X DirectoryServices locally through direct dscl comma
 
 Add this line to your application's Gemfile:
 
-    gem 'open_directory'
+    gem 'directory-services'
 
 And then execute:
 
@@ -14,18 +14,12 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install open_directory
+    $ gem install directory-services
 
 ## Usage
 
-Edit config/od.yml 
+Edit config/ds.yml 
 
 
 
 ## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
