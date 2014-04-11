@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-Edit config/ds.yml 
+Edit config/directoryservices.yml 
 
 
 
