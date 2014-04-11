@@ -1,6 +1,6 @@
 # OpenDirectory
 
-TODO: Write a gem description
+Allows interacting with OS X DirectoryServices locally through direct dscl commands or through an SSH Tunnel.
 
 ## Installation
 
@@ -18,7 +18,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Edit config/od.yml 
+
+
 
 ## Contributing
 
