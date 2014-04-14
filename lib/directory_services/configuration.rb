@@ -1,4 +1,4 @@
-module OpenDirectory
+module DirectoryServices
     module Configuration
         VALID_OPTIONS_KEYS    = %w(host_name host_username host_password od_username od_password od_datasource).freeze
 

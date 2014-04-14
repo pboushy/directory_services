@@ -1,12 +1,14 @@
 # DirectoryServices
 
-Allows interacting with OS X DirectoryServices locally through direct dscl commands or through an SSH Tunnel.
+Allows interacting with Apple's "Open Directory", Microsoft's "Active Directory", or LDAP through OS X's DirectoryServices.
+
+
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'directory-services'
+    gem 'directory_services'
 
 And then execute:
 
@@ -14,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install directory-services
+    $ gem install directory_services
 
 ## Usage
 

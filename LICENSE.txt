@@ -1,3 +1,5 @@
+Copyright (c) 2014 Phillip Boushy
+
 Copyright (c) 2013 Mauro Morales
 
 MIT License

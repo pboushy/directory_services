@@ -1,4 +1,4 @@
-module OpenDirectory
+module DirectoryServices
     class User
         def self.all
             Dscl.generate("list","/Users")

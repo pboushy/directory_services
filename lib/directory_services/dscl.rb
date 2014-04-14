@@ -1,14 +1,14 @@
 require "plist"
 
-module OpenDirectory
+module DirectoryServices
     class Dscl
         @@commands = []
 
         def self.generate(command, path, params="")
-            datasource ||= OpenDirectory.od_datasource
+            datasource ||= DirectoryServices.od_datasource
             params = params.join(" ") unless params.empty?
             
-            @@commands << "dscl -plist -u #{OpenDirectory.od_username} -P #{OpenDirectory.od_password} #{datasource} -#{command} #{path} #{params}"
+            @@commands << "dscl -plist -u #{DirectoryServices.od_username} -P #{DirectoryServices.od_password} #{datasource} -#{command} #{path} #{params}"
         end
 
         def self.parse_output(string)
@@ -32,7 +32,7 @@ module OpenDirectory
 
         def self.run
             response = []
-            $ssh ||= Net::SSH.start(OpenDirectory.host_name, OpenDirectory.host_username, :password => OpenDirectory.host_password)
+            $ssh ||= Net::SSH.start(DirectoryServices.host_name, DirectoryServices.host_username, :password => DirectoryServices.host_password)
             @@commands.each do |command|
                 output = $ssh.exec!(command)
                 response << {:parsed_out => parse_output(output), :output => output, :command => command} unless output.nil?
