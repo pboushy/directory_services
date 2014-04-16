@@ -8,7 +8,7 @@ module DirectoryServices
 			datasource ||= DirectoryServices.od_datasource
 			params = params.join(" ") unless params.empty?
 			
-			@@commands << "dscl -plist -u #{DirectoryServices.od_username} -P #{DirectoryServices.od_password} #{datasource} -#{command} #{path} #{params}"
+			@@commands << "dscl -plist -u '#{DirectoryServices.od_username}' -P '#{DirectoryServices.od_password}' #{datasource} -#{command} #{path} #{params}"
 		end
 
 		def self.parse_output(string)
@@ -30,11 +30,11 @@ module DirectoryServices
 			end
 		end
 
-		def self.run
+		def self.run(debug=false)
 			response = []
-			if DirectoryServices.run_locally
+			if DirectoryServices.run_locally == 'yes'
 				@@commands.each do |command|
-					output = system(command)
+					output = `#{command}`
 					response << {:parsed_out => parse_output(output), :output => output, :command => command} unless output.nil?
 				end
 			else
@@ -45,7 +45,7 @@ module DirectoryServices
 				end
 			end
 			@@commands.clear
-			if response.size == 1
+			if response.size == 1 && debug == false
 				response[0][:parsed_out]
 			else
 				response
