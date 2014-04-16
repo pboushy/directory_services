@@ -24,23 +24,23 @@ There are two ways to configure directory_services.
 
 ### ENV Variables
 
-Please add the following ENV variables:
+Tell your app that you want to load the configuration from environment variables:
 	
-	RUN_LOCALLY (optional, defaults to 'yes')
-	HOST_NAME
-	HOST_USERNAME
-	HOST_PASSWORD
-	OD_USERNAME
-	OD_PASSWORD
-	OD_DATASOURCE (optional, defaults to '/LDAPv3/127.0.0.1')
+	DirectoryServices.load_env
 
-The easiest way to add these is through command line:
+And create the environment variables:
 
-	export ENV_VARIABLE="value"
+	export RUN_LOCALLY='yes' # default='yes'
+	export HOST_NAME='yourhost.com' 
+	export HOST_USERNAME='localadmin'
+	export HOST_PASSWORD='localpass'
+	export OD_USERNAME='diradmin'
+	export OD_PASSWORD='dirpass'
+	export OD_DATASOURCE='/LDAPv3/127.0.0.1' # default='/LDAPv3/127.0.0.1'
 
 ### Programatically
 	
-	OpenDirectory.configure do |config|
+	DirectoryServices.configure do |config|
 		config.run_locally = 'yes' # default='yes'
 		config.host_name = 'yourhost.com'
 		config.host_username = 'sshadmin'
