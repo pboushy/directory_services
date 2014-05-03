@@ -1,8 +1,8 @@
 module DirectoryServices
 	class User
 		def self.all
-			Dscl.generate("list", "/Users")
-			Dscl.run
+			DSQuery.generate_dscl("list", "/Users")
+			DSQuery.run
 		end
 
 		def self.exists?(username)
@@ -12,8 +12,8 @@ module DirectoryServices
 
 		def self.read(username, params="")
 			if exists?(username)
-				Dscl.generate("read", "/Users/#{username}",params)
-				Dscl.run
+				DSQuery.generate_dscl("read", "/Users/#{username}",params)
+				DSQuery.run
 			else
 				false
 			end
@@ -21,8 +21,8 @@ module DirectoryServices
 
 		def self.auth(username, password)
 			params = ["'#{password}'"]
-			Dscl.generate("authonly", username, params)
-			output = Dscl.run
+			DSQuery.generate_dscl("authonly", username, params)
+			output = DSQuery.run
 			if output.empty?
 				true
 			else
@@ -31,33 +31,33 @@ module DirectoryServices
 		end
 
 		def self.base_script(username, password=nil, params=[])
-			#Dscl.generate("passwd", "/Users/#{username}", ["'#{password}'"]) unless password.nil?
+			#DSQuery.generate_dscl("passwd", "/Users/#{username}", ["'#{password}'"]) unless password.nil?
 			params.each do |key, value|
 				if key == :Keywords
 					value.each do |keyword|
-						Dscl.generate("append", "/Users/#{username}", [key, "'#{keyword}'"])
+						DSQuery.generate_dscl("append", "/Users/#{username}", [key, "'#{keyword}'"])
 					end
 				else
-					Dscl.generate("create", "/Users/#{username}", [key, "'#{value}'"])
+					DSQuery.generate_dscl("create", "/Users/#{username}", [key, "'#{value}'"])
 				end
 			end
 		end
 
 		def self.update(username, password=nil, params=[])
 		  base_script(username, password, params)
-		  Dscl.run
+		  DSQuery.run
 		end
 
 		def self.create(username, password, params=[])
-		  Dscl.generate("create", "/Users/#{username}")
-		  Dscl.generate("passwd", "/Users/#{username}", ["'#{password}'"])
+		  DSQuery.generate_dscl("create", "/Users/#{username}")
+		  DSQuery.generate_dscl("passwd", "/Users/#{username}", ["'#{password}'"])
 		  base_script(username, password, params)
-		  Dscl.run
+		  DSQuery.run
 		end
 
 		def self.delete(username)
-			Dscl.generate("delete", "/Users/#{username}")
-			Dscl.run
+			DSQuery.generate_dscl("delete", "/Users/#{username}")
+			DSQuery.run
 		end
 
 		def self.active?(username)
@@ -67,21 +67,21 @@ module DirectoryServices
 
 		def self.disable(username)
 			params = %w(AuthenticationAuthority ';DisabledUser;')
-			Dscl.generate("append", "/Users/#{username}", params)
-			Dscl.run
+			DSQuery.generate_dscl("append", "/Users/#{username}", params)
+			DSQuery.run
 		end
 
 		def self.enable(username)
 			response = read(username, ["AuthenticationAuthority"])
 			response["dsAttrTypeStandard:AuthenticationAuthority"].delete(";DisabledUser;")
 			params = ["dsAttrTypeStandard:AuthenticationAuthority", "'" + response["dsAttrTypeStandard:AuthenticationAuthority"].join(" ") + "'"]
-			Dscl.generate("create", "/Users/#{username}", params)
-			Dscl.run
+			DSQuery.generate_dscl("create", "/Users/#{username}", params)
+			DSQuery.run
 		end
 
 		def self.change_password(username, password)
-		  Dscl.generate("passwd", "/Users/#{username}", ["'#{password}'"])
-		  Dscl.run
+		  DSQuery.generate_dscl("passwd", "/Users/#{username}", ["'#{password}'"])
+		  DSQuery.run
 		end
 
 	end

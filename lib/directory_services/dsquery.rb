@@ -1,10 +1,33 @@
 require "plist"
 
 module DirectoryServices
-	class Dscl
+	class DSQuery
 		@@commands = []
 
-		def self.generate(command, path, params="")
+		# operation: edit, checkmember
+		# attributes: {:add_delete => 'add'|'delete', :record_type => 'user'|'group', :record_name => 'group_name'|'user_name'}
+		def self.generate_dseditgroup(operation, groupname, attributes)
+			datasource ||= DirectoryServices.od_datasource
+			command = "dseditgroup -o #{operation} -n #{datasource} -u '#{DirectoryServices.od_username}' -P '#{DirectoryServices.od_password}' "
+			command << case operation
+			when 'edit'
+				if (attributes[:add_delete] == 'add' || attributes[:add_delete] == 'delete') && 
+					!attributes[:record_name].empty? && 
+					(attributes[:record_type] == 'user' || attributes[:record_type] == 'group')
+				then
+					if attributes[:add_delete] == 'delete'
+						"-d #{attributes[:record_name]} -t #{attributes[:record_type]} #{groupname}"
+					else
+						"-a #{attributes[:record_name]} -t #{attributes[:record_type]} #{groupname}"
+					end
+				end
+			when 'checkmember'
+				"-m #{record_name} #{groupname}"
+			else
+			end
+			@@commands << command
+		end
+		def self.generate_dscl(command, path, params="")
 			datasource ||= DirectoryServices.od_datasource
 			params = params.join(" ") unless params.empty?
 			
