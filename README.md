@@ -55,11 +55,10 @@ And create the environment variables:
 
 I would love to have some more experienced ruby/rails/gem developers point me in the right direction to make this a better gem. 
 
-## Current Thoughts on "DirectoryServices"
+### Things I would like assistance on learning how to
 
-Currently I feel it is mostly a gem full of methods tossed into classes for organization... this is mostly due to the original gem I branched and my inexperience as a ruby developer.
-
-### This to accomplish in the future:
-
-I would love to update it to include actual user and group objects that allow the user to get a user and group info through properties. (e.g. phillip.groups)
-Customize to allow pulling from OD or AD with some customization. I'd like for the code to intelligently pull users and groups from both stores if necessary.
+- setup Users to act more like an actual object (maybe even based off of ActiveRecord?)
+- setup Groups to act more like an actual object (maybe even based off of ActiveRecord?)
+- setup Users and Groups to be related (purpose: get list of groups for user by phillip.groups where phillip is a User object)
+- make it where if the directory store is AD it pulls different information automatically without a series of complicated if/then statements.
+- any recommendations on additional things to add
