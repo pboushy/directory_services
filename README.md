@@ -3,8 +3,11 @@
 Allows interacting with Apple's "Open Directory", Microsoft's "Active Directory", or LDAP through OS X's DirectoryServices.
 
 
-
 ## Installation
+
+    gem install directory_services
+
+OR:
 
 Add this line to your application's Gemfile:
 
@@ -12,11 +15,7 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install directory_services
+    bundle
 
 ## Configure
 

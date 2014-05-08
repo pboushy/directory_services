@@ -24,14 +24,13 @@ module DirectoryServices
 			DSQuery.generate_dscl("authonly", username, params)
 			output = DSQuery.run
 			if output.empty?
-				true
+				return true
 			else
-				false
+				return false
 			end
 		end
 
-		def self.base_script(username, password=nil, params=[])
-			#DSQuery.generate_dscl("passwd", "/Users/#{username}", ["'#{password}'"]) unless password.nil?
+		def self.base_script(username, params=[])
 			params.each do |key, value|
 				if key == :Keywords
 					value.each do |keyword|
@@ -51,7 +50,7 @@ module DirectoryServices
 		def self.create(username, password, params=[])
 		  DSQuery.generate_dscl("create", "/Users/#{username}")
 		  DSQuery.generate_dscl("passwd", "/Users/#{username}", ["'#{password}'"])
-		  base_script(username, password, params)
+		  base_script(username, params)
 		  DSQuery.run
 		end
 

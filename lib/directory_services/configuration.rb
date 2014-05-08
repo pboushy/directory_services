@@ -11,6 +11,7 @@ module DirectoryServices
 			self.od_username = ENV["OD_USERNAME"]
 			self.od_password = ENV["OD_PASSWORD"]
 			self.od_datasource = ENV["OD_DATASOURCE"] || '/LDAPv3/127.0.0.1'
+			return "success."
 		end
 
 		def configure

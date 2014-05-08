@@ -1,4 +1,5 @@
 require "plist"
+require "open3"
 
 module DirectoryServices
 	class DSQuery
@@ -27,11 +28,11 @@ module DirectoryServices
 			end
 			@@commands << command
 		end
-		def self.generate_dscl(command, path, params="")
+		def self.generate_dscl(operation, path, params="")
 			datasource ||= DirectoryServices.od_datasource
 			params = params.join(" ") unless params.empty?
 			
-			@@commands << "dscl -plist -u '#{DirectoryServices.od_username}' -P '#{DirectoryServices.od_password}' #{datasource} -#{command} #{path} #{params}"
+			@@commands << "dscl -plist -u '#{DirectoryServices.od_username}' -P '#{DirectoryServices.od_password}' #{datasource} -#{operation} #{path} #{params}"
 		end
 
 		def self.parse_output(string)
@@ -57,7 +58,7 @@ module DirectoryServices
 			response = []
 			if DirectoryServices.run_locally == 'yes'
 				@@commands.each do |command|
-					output = `#{command}`
+					output, error, status = Open3.capture3(command)
 					response << {:parsed_out => parse_output(output), :output => output, :command => command} unless output.nil?
 				end
 			else
